@@ -3,9 +3,7 @@
 
 // Instead of messing around with SQL statements myself
 require_once 'meekrodb.2.1.class.php';
-DB::$user = 'root';
-DB::$password = 'root';
-DB::$dbName = 'thinkup';
+require_once 'config.php';
 
 // Change this if you changed your posts table prefix
 $table_name = 'tu_posts';
