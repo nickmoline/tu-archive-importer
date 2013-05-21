@@ -11,15 +11,25 @@ $files = glob($directory . "*.js");
 
 echo "Running...";
 
+$processedfilescount = 0;
+$totalcount = 0;
+$filecount = 0;
+
 foreach($files as $file)
 {
-
+	$processedfilescount++;
+	$filecount = 0;
+	echo "\n\t".sprintf("%20s",$file)."\t";
 	$str_data = file_get_contents($file);
 	$str_data = substr($str_data, 32);
 	
 	$data = json_decode($str_data);
 	
 	foreach ($data as $tweet) {
+		if ($filecount % 100 == 0 && $filecount != 0) echo "\t".sprintf("%20s",number_format($filecount))."\n\t".str_repeat(" ", 20)."\t";
+		$totalcount++;
+		$filecount++;
+
 		$parsed_tweet = array(
 			'post_id'             => $tweet->id_str,
 			'author_username'     => $tweet->user->screen_name,
@@ -52,10 +62,13 @@ foreach($files as $file)
 		if ($count == 0) {
 			DB::insert($table_name, $parsed_tweet);
 		}
+		echo ".";
 	}
+	echo "\t".sprintf("%20s",number_format($filecount));
 }
+echo "\n\nProcessed ".number_format($totalcount)." tweets in ".number_format($processedfilescount)." files.\n\n";
 
-echo "Finished!";
+echo "Finished!\n\n";
 
 ?>
 
