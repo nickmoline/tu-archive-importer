@@ -5,8 +5,6 @@
 require_once 'meekrodb.2.1.class.php';
 require_once 'config.php';
 
-// Change this if you changed your posts table prefix
-$table_name = 'tu_posts';
 
 $directory = "tweets/";
 $files = glob($directory . "*.js");
